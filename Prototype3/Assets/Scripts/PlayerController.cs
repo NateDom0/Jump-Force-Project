@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
 
     public ParticleSystem dirtParticle;
 
+    public AudioClip jumpSound;
+
+    public AudioClip crashSound;
+
+    private AudioSource playerAudio; //want to omit player audio
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +34,8 @@ public class PlayerController : MonoBehaviour
         
         Physics.gravity *= gravityModifier; 
         // physics.gravity = physics.gravity * gravityModifier
+
+        playerAudio = GetComponent<AudioSource>();
 
         
     }
@@ -43,6 +51,8 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetTrigger("Jump_trig");
 
             dirtParticle.Stop();
+
+            playerAudio.PlayOneShot(jumpSound, 1.0f);
         }
     }
 
@@ -66,6 +76,8 @@ public class PlayerController : MonoBehaviour
             explosionParticle.Play();
 
             dirtParticle.Stop();
+
+            playerAudio.PlayOneShot(crashSound, 1.0f);
 
         }
 
