@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody playerRb;
+    private Rigidbody playerRb; //reference to Rigidbody
 
     public float jumpForce;
     public float gravityModifier;
@@ -13,12 +13,17 @@ public class PlayerController : MonoBehaviour
 
     public bool gameOver = false; //must be private
 
+    private Animator playerAnim; //reference to Animator
+
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        playerAnim;
         Physics.gravity *= gravityModifier; 
         // physics.gravity = physics.gravity * gravityModifier
+
+
         
     }
 
