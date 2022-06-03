@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if(Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             //playerRb.AddForce(Vector3.up * 10, ForceMode.Impulse);
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             //trigger death animation
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 1);
-            
+
         }
 
 
