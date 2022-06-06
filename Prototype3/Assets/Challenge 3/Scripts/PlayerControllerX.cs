@@ -22,12 +22,15 @@ public class PlayerControllerX : MonoBehaviour
     public AudioClip explodeSound;
     public AudioClip bounceSound;
 
+
     //private float upperBound = 12.5f; //prevent balloon from flying too high
     private float topBound = 15.0f;
     public float bounceHeight = 5.0f; //set bounce height when balloon touches ground
 
-    //public GameObject gameOverScreen;
-    public GameOverScreenX gameOverScreen;
+
+    public GameObject gameOverScreen; //set to CanvasBackground; initially inactive via inspector window
+    //public GameOverScreenX gameOverScreen;
+
 
 
     // Start is called before the first frame update
@@ -47,7 +50,7 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // While space is pressed and player is low enough, float up
-        if (Input.GetKeyDown(KeyCode.Space) && !gameOver /* && transform.position.y < upperBound*/)
+        if (Input.GetKeyDown(KeyCode.Space) && !gameOver) /* && transform.position.y < upperBound*/
         {
             playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
         }
@@ -69,7 +72,8 @@ public class PlayerControllerX : MonoBehaviour
             gameOver = true;
             Debug.Log("Game Over!");
             Destroy(other.gameObject);
-            gameObject.SetActive(gameOverScreen);
+
+            gameOverScreen.SetActive(true); //Set to Active - appears on window once it's game over
             
         } 
 

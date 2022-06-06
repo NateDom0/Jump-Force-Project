@@ -9,7 +9,7 @@ public class GameOverScreenX : MonoBehaviour
 
     public void RestartButton()
     {
-        SceneManager.LoadScene("Challenge 3");
+        SceneManager.LoadScene("Challenge 3"); //Click button to load/reset designated scene
     }
 
 
