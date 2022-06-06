@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement; //added
 using UnityEngine.UI; //added
 
+//NOTE: Script not in use
+
 public class RestartControlX : MonoBehaviour
 {
    
