@@ -10,20 +10,17 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier;
 
     public bool isOnGround = true; // use to prevent player from double-jumping
-
     public bool gameOver = false; //must be private
 
     private Animator playerAnim; //reference to Animator
 
     public ParticleSystem explosionParticle;
-
     public ParticleSystem dirtParticle;
 
     public AudioClip jumpSound;
-
     public AudioClip crashSound;
-
     private AudioSource playerAudio; //want to omit player audio
+
 
     // Start is called before the first frame update
     void Start()

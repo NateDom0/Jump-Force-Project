@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; //added
+using UnityEngine.UI; //added
+
 
 public class PlayerControllerX : MonoBehaviour
 {
-    public bool gameOver;
+    public bool gameOver = false;
 
     public float floatForce;
-    private float gravityModifier = 1.5f;
+    public float gravityModifier; //private to public, remove =1.5f
+    
     private Rigidbody playerRb;
 
     public ParticleSystem explosionParticle;
@@ -16,11 +20,24 @@ public class PlayerControllerX : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
+    public AudioClip bounceSound;
+
+
+    //private float upperBound = 12.5f; //prevent balloon from flying too high
+    private float topBound = 15.0f;
+    public float bounceHeight = 5.0f; //set bounce height when balloon touches ground
+
+
+    public GameObject gameOverScreen; //set to CanvasBackground; initially inactive via inspector window
+    //public GameOverScreenX gameOverScreen;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        playerRb = GetComponent<Rigidbody>();
+
         Physics.gravity *= gravityModifier;
         playerAudio = GetComponent<AudioSource>();
 
@@ -33,10 +50,16 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && !gameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && !gameOver) /* && transform.position.y < upperBound*/
         {
-            playerRb.AddForce(Vector3.up * floatForce);
+            playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
         }
+
+        if (transform.position.y > topBound)
+        {
+            transform.position = new Vector3(transform.position.x, topBound, transform.position.z);
+        }
+
     }
 
     private void OnCollisionEnter(Collision other)
@@ -49,6 +72,9 @@ public class PlayerControllerX : MonoBehaviour
             gameOver = true;
             Debug.Log("Game Over!");
             Destroy(other.gameObject);
+
+            gameOverScreen.SetActive(true); //Set to Active - appears on window once it's game over
+            
         } 
 
         // if player collides with money, fireworks
@@ -58,6 +84,13 @@ public class PlayerControllerX : MonoBehaviour
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
 
+        }
+
+        //check if balloon touches ground, bounce and add sound
+        else if (other.gameObject.CompareTag("Ground") && !gameOver)
+        {
+            playerRb.AddForce(Vector3.up * bounceHeight, ForceMode.Impulse);
+            playerAudio.PlayOneShot(bounceSound, 1.0f);
         }
 
     }
